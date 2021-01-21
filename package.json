@@ -1,0 +1,81 @@
+{
+  "name": "frourio-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "run-p dev:*",
+    "dev:client": "cross-env NUXT_PORT=3000 nuxt-ts",
+    "dev:server": "npm run dev --prefix server",
+    "dev:aspida": "aspida --watch",
+    "build": "run-p build:client build:server",
+    "build:client": "aspida && nuxt-ts build",
+    "build:server": "npm run build --prefix server",
+    "build:types": "aspida && npm run build:frourio --prefix server",
+    "lint": "npm run lint:js && npm run lint:style",
+    "lint:js": "eslint --ext .ts,.js,.vue .",
+    "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
+    "lint:fix": "npm run lint:js -- --fix && npm run lint:style -- --fix",
+    "migration:generate": "npm run migration:generate --prefix server",
+    "migration:run": "npm run migration:run --prefix server",
+    "migration:revert": "npm run migration:revert --prefix server",
+    "start": "run-p start:*",
+    "start:client": "nuxt-ts start",
+    "start:server": "npm start --prefix server",
+    "test": "npm run build:types && jest",
+    "typecheck": "npm run build:types && tsc --noEmit && tsc --noEmit -p server"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": "eslint",
+    "*.{css,vue}": "stylelint"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "@aspida/fetch": "^1.2.1",
+    "@aspida/node-fetch": "^1.2.1",
+    "@nuxt/typescript-runtime": "^2.0.1",
+    "class-validator": "^0.13.1",
+    "core-js": "^3.8.2",
+    "nuxt": "2.14.12"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@nuxt/types": "^2.14.12",
+    "@nuxt/typescript-build": "^2.0.4",
+    "@nuxtjs/eslint-config": "^5.0.0",
+    "@nuxtjs/eslint-config-typescript": "^5.0.0",
+    "@nuxtjs/eslint-module": "^3.0.2",
+    "@nuxtjs/stylelint-module": "^4.0.0",
+    "@types/jest": "^26.0.20",
+    "@types/node-fetch": "^2.5.8",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "@vue/test-utils": "^1.1.2",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-nuxt": "^2.0.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.4.1",
+    "husky": "^4.3.8",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.1",
+    "stylelint": "^13.8.0",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^20.0.0",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "vue-jest": "^3.0.7"
+  }
+}
